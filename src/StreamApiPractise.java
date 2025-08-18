@@ -5,7 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.OptionalInt;
-import java.util.function.Function;
+import java.util.Set;
+import java.util.function.Function;import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -14,6 +15,7 @@ public class StreamApiPractise {
 
 	public static void main(String[] args) {
 		
+		testStream();
 		longestString();
 		
 		//odd even  Separately
@@ -118,8 +120,8 @@ public static boolean isPrime(int n){
 	}
 	
 	private static void longestString() {
-		List<String> ls = Arrays.asList("Ram","Shyam","as","dfsdafdaf");
-		Optional<String> str  = ls.stream().max(String::compareTo);
+		List<String> ls = Arrays.asList("Zzzz","Ram","Shyam","as","dfsdafda","eq");
+		Optional<String> str  = ls.stream().max(String::compareTo);   // lexicographically
 		if(str.isPresent()) {
 			String s = str.get();
 			System.out.println(s);
@@ -194,6 +196,32 @@ Map<String, Long> wordFrequency = words
 .collect(Collectors
 .groupingBy(Function.identity(), Collectors.counting())
 );
+	}
+	
+	private static void testStream() {
+		
+		//Longest String by length not lexicographically
+		List<String> ls = Arrays.asList("asd","asdasdf", "aw");
+		Optional<String> s = ls.stream().max(Comparator.comparingInt(String::length));
+		s.ifPresent(System.out::println);
+		
+		//odd even
+		List<Integer> ls2 = Arrays.asList(1,2,3);
+		Map<Boolean,List<Integer>> mpMap=ls2.stream().collect(Collectors.partitioningBy(x->x%2==0));
+		mpMap.get(false).forEach((v)->System.out.print(v));
+		
+		//sum of squares of of even numbers
+		Integer count1 = ls2.stream().filter(n->n%2==0).map(n->n*n).reduce(0,Integer::sum);
+		System.out.println("Count : "+count1);
+		
+		OptionalInt opMax = ls2.stream().mapToInt(n->n).max();
+		opMax.ifPresent(System.out::println);
+		
+		//first repeated character in string
+		String str = "ROHITOHI";
+		Set<Character> set = new HashSet<>();
+		str.chars().mapToObj(n->(char)n).filter(c->!(set.add(c))).findFirst().ifPresent(System.out::println);
+		
 	}
 }
 

@@ -60,6 +60,7 @@ public class ArrayTest {
 		
 		//add consecutive repetitive element
 		addConsecutiveDuplicates();
+		addConsecutiveDuplicates2();
 		
 		//--------------------------------------Medium code starts from here ------------------------------------------------>
 	
@@ -474,6 +475,34 @@ public class ArrayTest {
 		}
 		System.out.print("Adding consecutive Duplicates : ");
 		arList.forEach(n->System.out.print(n));
+		System.out.println();
+		
+	}
+	
+	private static void addConsecutiveDuplicates2() {
+		
+		// 1->n
+		// j=0
+		// sum=arr[0]
+		
+		int[] arr= {2,2,2,5,7,11,12,12,1};   // output : 6,5,7,11,24,1
+		int j=0;
+		int sum=arr[0];
+		for(int i=1; i<arr.length;i++) {
+			if(arr[i-1] == arr[i]) {
+				sum+=arr[i];
+				arr[j]=sum;
+			}else {
+				arr[j]=sum;
+				sum=arr[i];
+				j++;
+			}
+		}
+		
+		System.out.print("Adding consecutive Duplicates 2 : ");
+		for(int i=0; i<=j;i++) {
+			System.out.print(arr[i]);
+		}
 		System.out.println();
 		
 	}

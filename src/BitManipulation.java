@@ -8,7 +8,7 @@ public class BitManipulation {
 		decimal2Binary();
 		binary2decimal();
 		
-		// right shift divides the number by 2 to power k, menas right shift 1, will divide by 2, >>2 will divide by 4 and so on
+		// right shift divides the number by 2 to power k, means right shift 1, will divide by 2, >>2 will divide by 4 and so on
 		rightLeftShiftTest(); //divides by 2 raised to power 2, >>3, will divide by 8
 		
 		//computer stores negation in 2's complement, flips all the bits, if negative converts to 2's complement or else stops
@@ -203,7 +203,7 @@ public class BitManipulation {
 	}
 	
 	private static void singleNumberInArray() {
-		int[] arr= {4,1,1,2,2,3,3};
+		int[] arr= {1,4,2,1,2,3,3};
 		int XOR= 0;
 		for(int x: arr) {
 			XOR = XOR ^ x;

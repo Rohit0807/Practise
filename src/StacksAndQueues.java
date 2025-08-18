@@ -94,6 +94,11 @@ public class StacksAndQueues {
 		
         balancedParanthesis();
         infixToPostfix();
+        infixToPrefix();
+        postfixToInfix();
+        prefixToInfix();
+        postfixToPrefix();
+        prefixToPostfix();
         
 	}
 	
@@ -154,8 +159,7 @@ public class StacksAndQueues {
 				st.pop();
 			}else {
 				while (!st.isEmpty() && st.peek() != '(' &&
-		                (hs.get(s.charAt(i)) < hs.get(st.peek()) ||
-		                 (hs.get(s.charAt(i)).equals(hs.get(st.peek())) && s.charAt(i) != '^'))) {
+		                (hs.get(s.charAt(i)) <= hs.get(st.peek()))) {
 		                ans += st.pop();
 		            }
 				st.push(s.charAt(i));
@@ -168,6 +172,143 @@ public class StacksAndQueues {
 		
 		System.out.println(ans);
 	}
+	
+	private static void infixToPrefix(){
+		String s = "a+b*(d^e^f-5)^g+h";   // abde^5-*+
+		
+		StringBuilder reversed = new StringBuilder();
+        for (int i = s.length() - 1; i >= 0; i--) {
+            char c = s.charAt(i);
+            if (c == '(')
+                reversed.append(')');
+            else if (c == ')')
+                reversed.append('(');
+            else
+                reversed.append(c);
+        }
+        s = reversed.toString();
+		
+		Stack<Character> st = new Stack<>();
+		String ans= "";
+		
+		HashMap<Character, Integer> hs = new HashMap<>();
+		hs.put('^',3);
+		hs.put('/',2);
+		hs.put('*',2);
+		hs.put('+',1);
+		hs.put('-',1);
+		
+		for(int i=0; i<s.length();i++) {
+			if((s.charAt(i) >='A'  && s.charAt(i) <='Z') ||
+					(s.charAt(i) >='a'  && s.charAt(i) <='z') ||
+					(s.charAt(i) >='0'  && s.charAt(i) <='9')) {
+				ans+=s.charAt(i);
+				System.out.println(ans);
+			}else if(s.charAt(i) == '(') {
+				st.push('(');
+			}else if (s.charAt(i) == ')') {
+				while(!st.isEmpty() && !(st.peek()=='(')) {
+					ans+=st.pop();
+				}
+				st.pop();
+			}else {
+				while (!st.isEmpty() && st.peek() != '(' &&
+		                (hs.get(s.charAt(i)) <= hs.get(st.peek()))) {
+		                ans += st.pop();
+		            }
+				st.push(s.charAt(i));
+			}
+		}
+		
+		while (!st.isEmpty()) {
+		    ans += st.pop();
+		}
+		
+		ans = new StringBuilder(ans).reverse().toString();
+		
+		System.out.println(ans);
+				
+	}
+	
+	private static void postfixToInfix() {
+		String s = "abde^f^5-g^*+h+";
+		Stack<String> st = new Stack<>();
+		
+		for (int i=0; i<s.length();i++) {
+			Character ch = s.charAt(i);
+			if(Character.isLetterOrDigit(ch)) {
+				st.push(ch.toString());
+			}else {
+				String t1 = st.pop();
+				String t2 = st.pop();
+				st.push("("+t2+ch+t1+")");
+			}
+		}
+		
+		System.out.println(st.peek());
+	}
+	
+	private static void prefixToInfix() {
+	    String prefix = "+*AB-CD";
+	    Stack<String> stack = new Stack<>();
+
+	    for (int i = prefix.length() - 1; i >= 0; i--) {
+	        char ch = prefix.charAt(i);
+	        
+	        if (Character.isLetterOrDigit(ch)) {
+	            stack.push(Character.toString(ch));
+	        } else {
+	            String operand1 = stack.pop();
+	            String operand2 = stack.pop();
+	            String expr = "(" + operand1 + ch + operand2 + ")";
+	            stack.push(expr);
+	        }
+	    }
+
+	    System.out.println("Infix: " + stack.peek());
+	}
+	
+	private static void postfixToPrefix() {
+	    String postfix = "ab+c*";
+	    Stack<String> stack = new Stack<>();
+
+	    for (int i = 0; i < postfix.length(); i++) {
+	        char ch = postfix.charAt(i);
+
+	        if (Character.isLetterOrDigit(ch)) {
+	            stack.push(Character.toString(ch));
+	        } else {
+	            String op2 = stack.pop();
+	            String op1 = stack.pop();
+	            String expr = ch + op1 + op2;
+	            stack.push(expr);
+	        }
+	    }
+
+	    System.out.println("Prefix: " + stack.peek());
+	}
+	
+	private static void prefixToPostfix() {
+	    String prefix = "*+abc";
+	    Stack<String> stack = new Stack<>();
+
+	    for (int i = prefix.length() - 1; i >= 0; i--) {
+	        char ch = prefix.charAt(i);
+
+	        if (Character.isLetterOrDigit(ch)) {
+	            stack.push(Character.toString(ch));
+	        } else {
+	            String op1 = stack.pop();
+	            String op2 = stack.pop();
+	            String expr = op1 + op2 + ch;
+	            stack.push(expr);
+	        }
+	    }
+
+	    System.out.println("Postfix: " + stack.peek());
+	}
+
+
 	
 
 }

@@ -27,34 +27,26 @@ import java.util.stream.Stream;
 public class Test1 {
 	
 	public static void main(String[] args) {
-		System.out.println("Test1");
+		 int[] arr = {2, 7, 11, 15,3,6,2,7};
+	        int target = 9;
+	        Map<Integer,List<Integer>> hm = new HashMap<>();
+	        List<Integer> ls = new LinkedList<>();
+	        for(int i=0; i<arr.length;i++){
+	            
+	            Integer diff = target-arr[i];
+	            if(hm.containsKey(diff)){
+	                List<Integer> index = hm.get(diff);
+	                for(Integer x: index){
+	                    System.out.println(x +","+i);
+	                }
+	                
+	            }else{
+	                ls.add(i);
+	                hm.put(arr[i], ls);
+	            }
+	        }
 		
-//		Input: "swiss"
-//		Output: 'w'
-		
-		//non repeating char
-		//chars  char(map) hashSet()   .findFirst w _
-		//
-		
-		String str = "swiss";
-//		HashSet<Character> hs = new HashSet<Character>();
-//		
-//		HashMap<Character, Long> hm = new HashMap<Character, Long>();
-//		
-//		Optional<Character> op = str.chars().mapToObj(c->(char) c).filter(n->hs.add(n)).peek(System.out::println).findFirst();//
-//		if(op.isPresent()) {
-//			System.out.println(op.get());
-//		}else {
-//			System.out.println("_");
-//		}
-//		
-		
-		str.chars().mapToObj(c->(char) c)
-		.collect(Collectors.groupingBy(Function.identity(),LinkedHashMap::new, Collectors.counting()))
-		.entrySet()
-		.stream()
-		.filter(n->n.getValue()==1)
-		.findFirst().ifPresent(System.out::println);
+			
  	}
 
 }

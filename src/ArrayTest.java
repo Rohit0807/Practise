@@ -497,6 +497,7 @@ public class ArrayTest {
 				sum=arr[i];
 				j++;
 			}
+			//arr[j] = sum;
 		}
 		
 		System.out.print("Adding consecutive Duplicates 2 : ");

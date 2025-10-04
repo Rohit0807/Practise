@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Stream;
 
 public class ArrayTest {
@@ -67,6 +69,7 @@ public class ArrayTest {
 		//Two Sum Problem  --> i/p : 1,6,2,3,6,4    target: 5,    o/p : 0,5
 		twoSumUsingBruteForce();
 		twoSumUsingHashing();
+		findTwoSum();
 		//for optimal approach use two pointers, sort the array and add first and last element and increase/decrease
 		//like 2,3,4,5,6 target is 12 2+6=8 increase 3+6=9 again 4+6=10, 5+6=11   Not found
 		
@@ -544,6 +547,20 @@ public class ArrayTest {
 	
 	//for optimal approach use two pointers, sort the array and add first and last element and increase/decrease
 	//like 2,3,4,5,6 target is 12 2+6=8 increase 3+6=9 again 4+6=10, 5+6=11   Not found
+	
+	//print all pairs not only find the pairs
+	public static void findTwoSum() {
+		int[] nums = {2, 7, 11, 15, -2, 3,6,2,7, 8};
+        int target = 9;
+        Set<Integer> seen = new HashSet<>();
+        for (int num : nums) {
+            int complement = target - num;
+            if (seen.contains(complement)) {
+                System.out.println("Pair: (" + num + ", " + complement + ")");
+            }
+            seen.add(num);
+        }
+    }
 
 	private static void sortingWithElementsAs012_ThreePointerApproach() {
 		
